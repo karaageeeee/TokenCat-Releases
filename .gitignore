@@ -1,0 +1,51 @@
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+DerivedData/
+*.xcresult
+
+# Built artifact
+TokenCat.app/
+TokenCat vol.*.app/
+TokenCat 20*/
+token-run-cat.app/
+*.dmg
+*.zip
+
+# Local historical bundles kept outside Git history
+_archive/
+_archived/
+Resources/CatFrames/before-apply/
+
+# macOS
+.DS_Store
+
+# IDE / editor
+.vscode/
+*.xcuserstate
+xcuserdata/
+*.swp
+
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+
+# --- Claude Code 関連すべて（個人ワークフロー） ---
+# 設定 / hooks / sub-agent 定義
+.claude/
+# プロジェクト指示書（個人作業向けの内容）
+CLAUDE.md
+# claude-mem が自動生成するメモリコンテキスト
+AGENTS.md
+.claude-mem/
+*.claude-mem*
+# プランファイル（ローカル）
+.plans/
+*.plan.md
+
+# --- 仕様書（README 以外） ---
+# docs/ は内部設計メモなので丸ごと非公開
+# README から参照する公開用画像はリポジトリ内に明示的に置く
+docs/

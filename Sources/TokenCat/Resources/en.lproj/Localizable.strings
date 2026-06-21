@@ -1,0 +1,73 @@
+"summary.target" = "Target";
+"summary.overall_used" = "Overall Used";
+"summary.remaining" = "Remaining";
+"summary.animal_status" = "Animal Status";
+
+"settings.fetch_target" = "Target";
+"settings.polling_interval" = "Refresh interval";
+"settings.launch_at_login" = "Launch at login";
+
+"button.refresh" = "Refresh";
+"button.quit" = "Quit";
+"button.upgrade" = "Upgrade";
+"button.start_work" = "Open %@";
+"help.refresh_now" = "Refresh now";
+"help.login" = "Log in to %@";
+"help.start_work" = "Open %@ and start work";
+"help.claude_upgrade" = "Open the Claude Code upgrade page";
+"help.codex_upgrade" = "Open the Codex upgrade page";
+"footer.updated_at" = "Updated: %@";
+
+"service.loading" = "Loading...";
+"service.no_five_hour_data" = "No 5-hour window data";
+"service.fetch_failed" = "Fetch failed";
+"claude.upgrade_available" = "Upgrade Claude Code";
+"claude.limit_exhausted" = "Claude Code usage limit reached";
+"codex.upgrade_available" = "Upgrade Codex";
+"codex.limit_exhausted" = "Codex usage limit reached";
+
+"limit.five_hour" = "5-hour";
+"limit.weekly" = "Weekly";
+"limit.weekly_sonnet" = "Weekly (Sonnet)";
+"reset.soon" = "Reset soon";
+"reset.remaining" = "%@ left (resets at %@)";
+"duration.days_hours_minutes" = "%dd %dh %dm";
+
+"cat_state.running" = "Running";
+"cat_state.tired_running" = "Tired Running";
+"cat_state.sleepy_running" = "Sleepy Running";
+"cat_state.exhausted_walking" = "Exhausted Walking";
+"cat_state.collapsed" = "Collapsed";
+"cat_state.unavailable" = "Data Unavailable";
+
+"notification.target_changed.title" = "TokenCat target changed";
+"notification.target_changed.body" = "%@ -> %@";
+"notification.status_changed.title" = "TokenCat animal status changed";
+"notification.status_changed.body" = "%@: %@ -> %@%@";
+"notification.status.running" = "%@ is running well again%@";
+"notification.status.tired_running" = "%@ is a little tired%@";
+"notification.status.sleepy_running" = "%@ is getting sleepy%@";
+"notification.status.exhausted_walking" = "%@ is exhausted%@";
+"notification.status.collapsed" = "%@ has collapsed%@";
+"notification.status.unavailable" = "%@ data is unavailable";
+"notification.remaining" = " (remaining %d%%)";
+"notification.remaining_over_100" = " (remaining 100%+)";
+
+"error.unknown" = "Unknown error";
+"error.keychain_token_missing" = "Claude Code OAuth token was not found in Keychain. Run `claude login` in Terminal.";
+"error.anthropic_unauthorized" = "Anthropic authentication failed (401). Run `claude login` again.";
+"error.anthropic_rate_limited_retry" = "Anthropic API rate limit reached. TokenCat will retry automatically in about %d minutes.";
+"error.anthropic_rate_limited" = "Anthropic API rate limit reached (429). TokenCat will wait until the next polling cycle.";
+"error.anthropic_http" = "Anthropic API error (status %d)";
+"error.codex_cli_not_found" = "Codex CLI was not found. Run `npm i -g @openai/codex`.";
+"error.codex_process_exited" = "codex app-server exited. TokenCat will try to restart it.";
+"error.codex_rpc" = "Codex RPC error: %@";
+"error.decoding" = "Failed to decode response: %@";
+"error.timeout" = "The request timed out.";
+"error.network" = "Network error: %@";
+
+"polling.30_seconds" = "30 sec";
+"polling.1_minute" = "1 min";
+"polling.2_minutes" = "2 min";
+"polling.5_minutes" = "5 min";
+"polling.10_minutes" = "10 min";

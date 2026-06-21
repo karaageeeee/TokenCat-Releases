@@ -1,0 +1,73 @@
+"summary.target" = "取得対象";
+"summary.overall_used" = "全体の使用率";
+"summary.remaining" = "残り";
+"summary.animal_status" = "現在の状態";
+
+"settings.fetch_target" = "取得対象";
+"settings.polling_interval" = "更新間隔";
+"settings.launch_at_login" = "ログイン時に自動起動";
+
+"button.refresh" = "更新";
+"button.quit" = "終了";
+"button.upgrade" = "アップグレード";
+"button.start_work" = "%@を開く";
+"help.refresh_now" = "今すぐ更新";
+"help.login" = "%@ にログイン";
+"help.start_work" = "%@ を開いて作業を始める";
+"help.claude_upgrade" = "Claude Code のアップグレード画面を開く";
+"help.codex_upgrade" = "Codex のアップグレード画面を開く";
+"footer.updated_at" = "更新: %@";
+
+"service.loading" = "取得中...";
+"service.no_five_hour_data" = "5時間ウィンドウのデータがありません";
+"service.fetch_failed" = "取得失敗";
+"claude.upgrade_available" = "Claude Codeをアップグレード";
+"claude.limit_exhausted" = "Claude Code の使用制限に達しました";
+"codex.upgrade_available" = "Codexをアップグレード";
+"codex.limit_exhausted" = "Codex の使用制限に達しました";
+
+"limit.five_hour" = "5時間";
+"limit.weekly" = "週次";
+"limit.weekly_sonnet" = "週次 (Sonnet)";
+"reset.soon" = "まもなくリセット";
+"reset.remaining" = "あと %@ (%@ リセット)";
+"duration.days_hours_minutes" = "%d日 %d時間 %d分";
+
+"cat_state.running" = "元気";
+"cat_state.tired_running" = "少し疲れ気味";
+"cat_state.sleepy_running" = "眠そう";
+"cat_state.exhausted_walking" = "へとへと";
+"cat_state.collapsed" = "ぐったり";
+"cat_state.unavailable" = "取得できていません";
+
+"notification.target_changed.title" = "TokenCat 取得対象を変更";
+"notification.target_changed.body" = "%@ -> %@";
+"notification.status_changed.title" = "TokenCat 現在の状態が変化";
+"notification.status_changed.body" = "%@: %@ -> %@%@";
+"notification.status.running" = "%@が元気になりました%@";
+"notification.status.tired_running" = "%@が少し疲れました%@";
+"notification.status.sleepy_running" = "%@が眠そうです%@";
+"notification.status.exhausted_walking" = "%@がへとへとになりました%@";
+"notification.status.collapsed" = "%@がぐったりしました%@";
+"notification.status.unavailable" = "%@のデータを取得できていません";
+"notification.remaining" = " (残り %d%%)";
+"notification.remaining_over_100" = " (残り 100%+)";
+
+"error.unknown" = "原因不明";
+"error.keychain_token_missing" = "Claude Code の OAuth トークンが Keychain に見つかりません。ターミナルで `claude login` を実行してください。";
+"error.anthropic_unauthorized" = "Anthropic からの認証エラー (401)。`claude login` で再ログインしてください。";
+"error.anthropic_rate_limited_retry" = "Anthropic API のレート制限に達しました。約 %d 分後に自動で再試行します。";
+"error.anthropic_rate_limited" = "Anthropic API のレート制限 (429)。次回ポーリングまで待機します。";
+"error.anthropic_http" = "Anthropic API エラー (status %d)";
+"error.codex_cli_not_found" = "Codex CLI が見つかりません。`npm i -g @openai/codex` を実行してください。";
+"error.codex_process_exited" = "codex app-server が終了しました。再起動を試みます。";
+"error.codex_rpc" = "Codex RPC エラー: %@";
+"error.decoding" = "レスポンスのデコードに失敗: %@";
+"error.timeout" = "通信がタイムアウトしました。";
+"error.network" = "ネットワークエラー: %@";
+
+"polling.30_seconds" = "30秒";
+"polling.1_minute" = "1分";
+"polling.2_minutes" = "2分";
+"polling.5_minutes" = "5分";
+"polling.10_minutes" = "10分";
