@@ -1,0 +1,69 @@
+# XcodeGen 定義: App Store 配布用 Xcode プロジェクトを生成する。
+#
+#   brew install xcodegen   # 未導入の場合
+#   xcodegen generate       # TokenCat.xcodeproj を生成
+#   open TokenCat.xcodeproj
+#
+# 生成物 (TokenCat.xcodeproj) はコミットしない（.gitignore 済み）。常にこの yml が真実の源。
+name: TokenCat
+options:
+  bundleIdPrefix: com.tokencat
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "2.25"
+    CURRENT_PROJECT_VERSION: "225"
+    # 署名チーム未設定（App Store 提出時に各自の Team ID を設定）。
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  TokenCat:
+    type: application
+    platform: macOS
+    sources:
+      # Swift ソース一式。Sources/TokenCat/Resources/*.lproj は
+      # XcodeGen が自動でローカライズリソースとして取り込む。
+      - path: Sources/TokenCat
+      # ドット絵フレーム。開発用バックアップ (before-apply) はバンドルしない。
+      - path: Resources/CatFrames
+        excludes:
+          - "before-apply"
+          - "before-apply/**"
+          - ".DS_Store"
+        buildPhase: resources
+      # 追加相棒のドット絵（名前空間フォルダごとバンドル。README.txt は除外）。
+      - path: Resources/Companions
+        excludes:
+          - "**/README.txt"
+          - ".DS_Store"
+        buildPhase: resources
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tokencat.app
+        PRODUCT_NAME: TokenCat
+        INFOPLIST_FILE: Resources/Info.plist
+        GENERATE_INFOPLIST_FILE: "NO"
+        CODE_SIGN_ENTITLEMENTS: TokenCat.AppStore.entitlements
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: "YES"
+        COMBINE_HIDPI_IMAGES: "YES"
+        # メニューバー常駐アプリ（Dock 非表示）は Info.plist の LSUIElement で指定済み。
+
+schemes:
+  TokenCat:
+    build:
+      targets:
+        TokenCat: all
+    run:
+      config: Debug
+      # ローカル課金テスト用 StoreKit 構成。
+      storeKitConfiguration: StoreKit/Products.storekit
+    archive:
+      config: Release

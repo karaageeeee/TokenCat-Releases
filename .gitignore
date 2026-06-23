@@ -49,3 +49,7 @@ AGENTS.md
 # docs/ は内部設計メモなので丸ごと非公開
 # README から参照する公開用画像はリポジトリ内に明示的に置く
 docs/
+
+# XcodeGen で生成（project.yml が真実の源）
+TokenCat.xcodeproj/
+*.xcodeproj/xcuserdata/

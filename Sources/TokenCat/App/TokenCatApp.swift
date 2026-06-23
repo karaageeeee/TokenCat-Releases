@@ -6,6 +6,7 @@ struct TokenCatApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var viewModel = UsageViewModel()
     @State private var catAnimation = CatAnimationManager()
+    @State private var companionStore = CompanionStore()
     @State private var statusNotificationManager = StatusNotificationManager()
     @StateObject private var launchAtLogin = LaunchAtLoginStore()
 
@@ -14,6 +15,7 @@ struct TokenCatApp: App {
             UsagePopoverView(
                 viewModel: viewModel,
                 catAnimation: catAnimation,
+                companionStore: companionStore,
                 launchAtLogin: launchAtLogin
             )
                 .onAppear {
@@ -22,10 +24,18 @@ struct TokenCatApp: App {
                     // viewModel 全体ではなく providers だけを閉じ込めた @Sendable クロージャを渡す。
                     appDelegate.shutdownHandler = viewModel.makeShutdownHandler()
                 }
+                .task {
+                    // StoreKit のトランザクション購読・所有状態取得を起動。
+                    await companionStore.bootstrap()
+                }
+                .onChange(of: companionStore.selectedCompanion) { _, newCompanion in
+                    catAnimation.setCompanion(newCompanion)
+                }
         } label: {
             MenuBarLabel(viewModel: viewModel, catAnimation: catAnimation)
                 .onAppear {
                     statusNotificationManager.requestAuthorizationIfNeeded()
+                    catAnimation.setCompanion(companionStore.selectedCompanion)
                     catAnimation.start()
                     catAnimation.setState(viewModel.catState)
                 }

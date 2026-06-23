@@ -71,3 +71,25 @@
 "polling.2_minutes" = "2 min";
 "polling.5_minutes" = "5 min";
 "polling.10_minutes" = "10 min";
+
+"store.title" = "Companions";
+"store.restore" = "Restore";
+"store.restore.help" = "Restore previous purchases";
+"store.selected" = "In use";
+"store.use" = "Use";
+"store.unlock" = "Unlock";
+"store.unlock_price" = "Unlock %@";
+"store.error.product_not_found" = "This companion isn't available right now.";
+"store.error.unverified" = "Could not verify the purchase.";
+"store.error.pending" = "The purchase is pending approval.";
+
+"companion.cat.name" = "Cat";
+"companion.cat.tagline" = "The original. Watches your AI for free.";
+"companion.dog.name" = "Dog";
+"companion.dog.tagline" = "A loyal runner that never gives up.";
+"companion.rabbit.name" = "Rabbit";
+"companion.rabbit.tagline" = "Quick hops while your tokens last.";
+"companion.robot.name" = "Robot";
+"companion.robot.tagline" = "A tireless machine for heavy sessions.";
+"companion.cat_santa.name" = "Santa Cat";
+"companion.cat_santa.tagline" = "Seasonal cheer for the holidays.";

@@ -4,6 +4,7 @@ import AppKit
 struct UsagePopoverView: View {
     @Bindable var viewModel: UsageViewModel
     let catAnimation: CatAnimationManager
+    @Bindable var companionStore: CompanionStore
     @ObservedObject var launchAtLogin: LaunchAtLoginStore
 
     var body: some View {
@@ -11,6 +12,9 @@ struct UsagePopoverView: View {
             header
             catStatePreview
             summaryBlock
+
+            Divider()
+            CompanionStoreView(store: companionStore)
 
             if viewModel.isClaudeFetchEnabled {
                 Divider()
