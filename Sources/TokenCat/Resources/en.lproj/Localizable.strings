@@ -72,6 +72,7 @@
 "polling.5_minutes" = "5 min";
 "polling.10_minutes" = "10 min";
 
+"button.change_companion" = "Change companion";
 "store.title" = "Companions";
 "store.restore" = "Restore";
 "store.restore.help" = "Restore previous purchases";

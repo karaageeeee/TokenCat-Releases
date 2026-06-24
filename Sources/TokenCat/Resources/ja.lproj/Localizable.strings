@@ -72,6 +72,7 @@
 "polling.5_minutes" = "5分";
 "polling.10_minutes" = "10分";
 
+"button.change_companion" = "動物を変更";
 "store.title" = "相棒";
 "store.restore" = "復元";
 "store.restore.help" = "過去の購入を復元します";
