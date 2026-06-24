@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.npm-cache/
+*.log
+# Never commit App Store Connect API private keys.
+*.p8
+.env
+.env.*

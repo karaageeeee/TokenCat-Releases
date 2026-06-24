@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "asc": {
+      "command": "node",
+      "args": ["./tools/asc-mcp/dist/index.js"],
+      "env": {
+        "ASC_KEY_ID": "YOUR_KEY_ID",
+        "ASC_ISSUER_ID": "YOUR_ISSUER_ID_UUID",
+        "ASC_PRIVATE_KEY_PATH": "/absolute/path/to/AuthKey_YOUR_KEY_ID.p8"
+      }
+    }
+  }
+}
