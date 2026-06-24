@@ -67,12 +67,21 @@ final class UsageViewModel {
         self.usageFetchTarget = Self.loadPersistedFetchTarget()
     }
 
+    /// レート制限(429)を受けたとき、次回取得まで最低限空けるべき秒数。
+    /// 短いポーリング間隔のまま 429 を叩き続ける「リトライストーム」を防ぐ。
+    @ObservationIgnored private var rateLimitBackoff: TimeInterval?
+
+    /// 429 の Retry-After が不明なときに使う既定 backoff（秒）。
+    private static let defaultRateLimitBackoff: TimeInterval = 120
+
     /// `task(id: pollingInterval)` から駆動するメインループ。
     func runPollingLoop() async {
         await refresh()
         while !Task.isCancelled {
+            // 通常はユーザー設定の間隔。直前に 429 を受けていればその backoff を優先する。
+            let delay = max(pollingInterval.seconds, rateLimitBackoff ?? 0)
             do {
-                try await Task.sleep(nanoseconds: UInt64(pollingInterval.seconds * 1_000_000_000))
+                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
             } catch {
                 return
             }
@@ -100,11 +109,40 @@ final class UsageViewModel {
 
         switch usageFetchTarget {
         case .claude:
-            let claude = await fetchClaude()
-            snapshot = UsageSnapshot(claude: claude, codex: nil, fetchedAt: Date())
+            let new = await fetchClaude()
+            let resolved = resolve(new: new, previous: snapshot.claude)
+            snapshot = UsageSnapshot(claude: resolved.result, codex: nil, fetchedAt: resolved.fetchedAt)
         case .codex:
-            let codex = await fetchCodex()
-            snapshot = UsageSnapshot(claude: nil, codex: codex, fetchedAt: Date())
+            let new = await fetchCodex()
+            let resolved = resolve(new: new, previous: snapshot.codex)
+            snapshot = UsageSnapshot(claude: nil, codex: resolved.result, fetchedAt: resolved.fetchedAt)
+        }
+    }
+
+    /// 新しい取得結果と直近結果から、実際に表示する結果と取得時刻を決める。
+    ///
+    /// 一時的な失敗（レート制限・ネットワーク瞬断など）で直近に成功データがある場合は、
+    /// それを保持して表示が `unavailable` に途切れるのを防ぐ。`fetchedAt` も据え置き、
+    /// フッターには本当にデータを取れた時刻が残る。恒久的な失敗（要再ログイン等）は
+    /// そのまま表示し、ユーザーに対応を促す。
+    /// あわせてレート制限の backoff を更新する。
+    private func resolve(
+        new: Result<ServiceUsage, DomainError>,
+        previous: Result<ServiceUsage, DomainError>?
+    ) -> (result: Result<ServiceUsage, DomainError>?, fetchedAt: Date) {
+        switch new {
+        case .success:
+            rateLimitBackoff = nil
+            return (new, Date())
+        case .failure(let error):
+            if case .anthropicRateLimited = error {
+                rateLimitBackoff = error.rateLimitRetryAfter ?? Self.defaultRateLimitBackoff
+            }
+            // 一時的失敗 + 直近成功あり → 直近の成功データを維持して途切れを防ぐ。
+            if error.isTransient, case .success = previous {
+                return (previous, snapshot.fetchedAt)
+            }
+            return (new, Date())
         }
     }
 

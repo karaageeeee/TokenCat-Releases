@@ -12,6 +12,29 @@ enum DomainError: Error, Equatable, LocalizedError, Sendable {
     case timeout
     case network(String)
 
+    /// 一時的（自動で回復しうる）エラーかどうか。
+    ///
+    /// true の場合、取得失敗時に直近の成功データを保持して表示のチラつき（途切れ）を防ぐ。
+    /// false はユーザーの対応（再ログイン等）が必要な恒久的エラーで、UI に状態として表示する。
+    var isTransient: Bool {
+        switch self {
+        case .anthropicRateLimited, .network, .timeout, .decoding, .codexProcessExited:
+            return true
+        case .anthropicHTTP(let status):
+            return status >= 500
+        case .keychainTokenMissing, .anthropicUnauthorized, .codexCLINotFound, .codexRPCError:
+            return false
+        }
+    }
+
+    /// レート制限のとき、次回取得まで待つべき秒数（分かれば）。
+    var rateLimitRetryAfter: TimeInterval? {
+        if case .anthropicRateLimited(let retryAfter) = self {
+            return retryAfter
+        }
+        return nil
+    }
+
     var errorDescription: String? {
         switch self {
         case .keychainTokenMissing:
