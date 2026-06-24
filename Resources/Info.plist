@@ -14,10 +14,19 @@
 	<string>TokenCat</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ja</string>
+	</array>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleShortVersionString</key>
-	<string>2.14</string>
+	<string>2.25</string>
 	<key>CFBundleVersion</key>
-	<string>214</string>
+	<string>225</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
 	<key>LSUIElement</key>

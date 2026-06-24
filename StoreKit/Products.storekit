@@ -1,0 +1,87 @@
+{
+  "identifier" : "5D09E5FA-F075-449F-98F2-8E4602F57877",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3.00",
+      "familyShareable" : false,
+      "internalID" : "B892C2E0-3459-4451-BD42-459C718CADA2",
+      "localizations" : [
+        {
+          "description" : "A loyal runner that never gives up.",
+          "displayName" : "Dog",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.tokencat.companion.dog",
+      "referenceName" : "Companion - Dog",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "3.00",
+      "familyShareable" : false,
+      "internalID" : "B8D4CDE9-C786-48D3-AC57-ADF28816BE33",
+      "localizations" : [
+        {
+          "description" : "Quick hops while your tokens last.",
+          "displayName" : "Rabbit",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.tokencat.companion.rabbit",
+      "referenceName" : "Companion - Rabbit",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.00",
+      "familyShareable" : false,
+      "internalID" : "398F3B75-4EAD-4DEC-B94D-04F0D749ED9E",
+      "localizations" : [
+        {
+          "description" : "A tireless machine for heavy sessions.",
+          "displayName" : "Robot",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.tokencat.companion.robot",
+      "referenceName" : "Companion - Robot",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.00",
+      "familyShareable" : false,
+      "internalID" : "0D5F1DA1-390D-41BC-A529-D460C885A90A",
+      "localizations" : [
+        {
+          "description" : "Seasonal cheer for the holidays.",
+          "displayName" : "Santa Cat",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.tokencat.companion.cat_santa",
+      "referenceName" : "Companion - Santa Cat",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_compatibilityTimeRate" : {
+      "_storefront" : "USA",
+      "_value" : 0
+    },
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

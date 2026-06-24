@@ -71,3 +71,26 @@
 "polling.2_minutes" = "2分";
 "polling.5_minutes" = "5分";
 "polling.10_minutes" = "10分";
+
+"button.change_companion" = "動物を変更";
+"store.title" = "相棒";
+"store.restore" = "復元";
+"store.restore.help" = "過去の購入を復元します";
+"store.selected" = "使用中";
+"store.use" = "使う";
+"store.unlock" = "アンロック";
+"store.unlock_price" = "%@でアンロック";
+"store.error.product_not_found" = "この相棒は現在利用できません。";
+"store.error.unverified" = "購入を検証できませんでした。";
+"store.error.pending" = "購入は承認待ちです。";
+
+"companion.cat.name" = "ねこ";
+"companion.cat.tagline" = "元祖。無料であなたのAIを見守ります。";
+"companion.dog.name" = "いぬ";
+"companion.dog.tagline" = "あきらめず走り続ける忠実な相棒。";
+"companion.rabbit.name" = "うさぎ";
+"companion.rabbit.tagline" = "トークンが続く限り軽快にホップ。";
+"companion.robot.name" = "ロボット";
+"companion.robot.tagline" = "長丁場でも疲れ知らずのマシン。";
+"companion.cat_santa.name" = "サンタねこ";
+"companion.cat_santa.tagline" = "季節限定のホリデー仕様。";

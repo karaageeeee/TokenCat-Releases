@@ -4,13 +4,23 @@ import AppKit
 struct UsagePopoverView: View {
     @Bindable var viewModel: UsageViewModel
     let catAnimation: CatAnimationManager
+    @Bindable var companionStore: CompanionStore
     @ObservedObject var launchAtLogin: LaunchAtLoginStore
+
+    /// 相棒ストアの開閉状態。既定は閉じておき、デザインをすっきり保つ。
+    @State private var isStoreExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             header
             catStatePreview
+            changeCompanionButton
             summaryBlock
+
+            if isStoreExpanded {
+                Divider()
+                CompanionStoreView(store: companionStore)
+            }
 
             if viewModel.isClaudeFetchEnabled {
                 Divider()
@@ -52,6 +62,27 @@ struct UsagePopoverView: View {
                 .font(.system(size: 14, weight: .semibold))
             Spacer()
         }
+    }
+
+    /// 相棒ストアを開閉するボタン。普段はストアを隠し、押したときだけ表示する。
+    private var changeCompanionButton: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isStoreExpanded.toggle()
+            }
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "pawprint.fill")
+                Text(L10n.text("button.change_companion"))
+                Spacer()
+                Image(systemName: isStoreExpanded ? "chevron.up" : "chevron.down")
+                    .font(.system(size: 9))
+                    .foregroundStyle(.secondary)
+            }
+            .font(.system(size: 11, weight: .medium))
+            .frame(maxWidth: .infinity)
+        }
+        .controlSize(.small)
     }
 
     private var catStatePreview: some View {

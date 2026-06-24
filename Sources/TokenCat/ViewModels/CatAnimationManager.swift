@@ -7,15 +7,23 @@ import Observation
 final class CatAnimationManager {
     var state: CatState = .running
     var currentImage: NSImage?
-    var currentFallback: String = CatState.running.fallbackFrames[0]
+    var currentFallback: String
+
+    /// 現在アニメーションさせている相棒。
+    private(set) var companion: Companion
 
     @ObservationIgnored private let assetLoader: CatAssetLoader
     @ObservationIgnored private var framesByState: [CatState: [NSImage]] = [:]
     @ObservationIgnored private var timer: Timer?
     private var frameIndex = 0
 
-    init(assetLoader: CatAssetLoader = CatAssetLoader()) {
+    init(
+        companion: Companion = CompanionCatalog.free,
+        assetLoader: CatAssetLoader = CatAssetLoader()
+    ) {
+        self.companion = companion
         self.assetLoader = assetLoader
+        self.currentFallback = companion.fallbackFrames(for: .running)[0]
         reloadAssets()
         updateCurrentFrame()
     }
@@ -45,17 +53,26 @@ final class CatAnimationManager {
         }
     }
 
+    /// 表示する相棒を切り替える。アセットを再読込し、即座に反映する。
+    func setCompanion(_ newCompanion: Companion) {
+        guard companion != newCompanion else { return }
+        companion = newCompanion
+        frameIndex = 0
+        reloadAssets()
+        updateCurrentFrame()
+    }
+
     func reloadAssets() {
         framesByState = Dictionary(
             uniqueKeysWithValues: CatState.allCases.map { state in
-                (state, assetLoader.loadFrames(for: state))
+                (state, assetLoader.loadFrames(for: state, namespace: companion.assetNamespace))
             }
         )
     }
 
     private func advanceFrame() {
         let imageCount = framesByState[state]?.count ?? 0
-        let fallbackCount = state.fallbackFrames.count
+        let fallbackCount = companion.fallbackFrames(for: state).count
         let frameCount = max(imageCount, fallbackCount)
         guard frameCount > 0 else { return }
         frameIndex = (frameIndex + 1) % frameCount
@@ -82,7 +99,7 @@ final class CatAnimationManager {
             currentImage = nil
         }
 
-        let fallbackFrames = state.fallbackFrames
+        let fallbackFrames = companion.fallbackFrames(for: state)
         currentFallback = fallbackFrames[frameIndex % fallbackFrames.count]
     }
 }
