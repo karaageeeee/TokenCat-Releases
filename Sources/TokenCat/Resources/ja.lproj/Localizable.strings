@@ -94,3 +94,8 @@
 "companion.robot.tagline" = "長丁場でも疲れ知らずのマシン。";
 "companion.cat_santa.name" = "サンタねこ";
 "companion.cat_santa.tagline" = "季節限定のホリデー仕様。";
+
+"notification.recovered.title" = "おかえり";
+"notification.recovered.body" = "お帰りなさい。今日も頑張りましょう。";
+"notification.daily_start.title" = "勤務開始";
+"notification.daily_start.body" = "%@ の勤務開始。今日もよろしく。";

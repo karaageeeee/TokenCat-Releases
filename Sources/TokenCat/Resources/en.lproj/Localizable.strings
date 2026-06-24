@@ -94,3 +94,8 @@
 "companion.robot.tagline" = "A tireless machine for heavy sessions.";
 "companion.cat_santa.name" = "Santa Cat";
 "companion.cat_santa.tagline" = "Seasonal cheer for the holidays.";
+
+"notification.recovered.title" = "Welcome back";
+"notification.recovered.body" = "Welcome back. Let's get to work.";
+"notification.daily_start.title" = "Shift start";
+"notification.daily_start.body" = "%@'s shift begins. Let's work well today.";

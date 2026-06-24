@@ -35,6 +35,7 @@ struct TokenCatApp: App {
             MenuBarLabel(viewModel: viewModel, catAnimation: catAnimation)
                 .onAppear {
                     statusNotificationManager.requestAuthorizationIfNeeded()
+                    statusNotificationManager.notifyDailyStartIfNeeded(target: viewModel.usageFetchTarget)
                     catAnimation.setCompanion(companionStore.selectedCompanion)
                     catAnimation.start()
                     catAnimation.setState(viewModel.catState)
