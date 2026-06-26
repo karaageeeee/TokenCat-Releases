@@ -19,15 +19,26 @@ actor CodexAppServerClient {
     private var lineBuffer = JSONRPCLineBuffer()
 
     init(
-        candidates: [String] = [
-            "/opt/homebrew/bin/codex",
-            "/usr/local/bin/codex",
-            "/usr/bin/codex",
-        ],
+        candidates: [String] = CodexAppServerClient.defaultCandidates(),
         requestTimeout: TimeInterval = 8
     ) {
         self.candidates = candidates
         self.requestTimeout = requestTimeout
+    }
+
+    /// codex 実行ファイルの探索候補。
+    ///
+    /// `~/.local/bin` は codex 公式インストーラ (npm / standalone) の標準配置先のため
+    /// 必ず含める。Homebrew (`/opt/homebrew/bin`, `/usr/local/bin`) も候補に入れる。
+    /// これらに無い場合は `resolveExecutable()` が PATH を走査してフォールバックする。
+    static func defaultCandidates() -> [String] {
+        let home = FileManager.default.homeDirectoryForCurrentUser.path
+        return [
+            "\(home)/.local/bin/codex",
+            "/opt/homebrew/bin/codex",
+            "/usr/local/bin/codex",
+            "/usr/bin/codex",
+        ]
     }
 
     // MARK: - Lifecycle
@@ -116,9 +127,31 @@ actor CodexAppServerClient {
     // MARK: - Internals
 
     private func resolveExecutable() -> URL? {
-        candidates
-            .first { FileManager.default.isExecutableFile(atPath: $0) }
-            .map { URL(fileURLWithPath: $0) }
+        let fm = FileManager.default
+        // 1. 既知の候補パスを優先
+        if let hit = candidates.first(where: { fm.isExecutableFile(atPath: $0) }) {
+            return URL(fileURLWithPath: hit)
+        }
+        // 2. PATH を走査してフォールバック。GUI から起動された .app は
+        //    ログインシェルの PATH を継承しないため、ここでは親プロセスの PATH に
+        //    加えて代表的な bin ディレクトリも明示的に探す。
+        let home = fm.homeDirectoryForCurrentUser.path
+        let pathDirs = (ProcessInfo.processInfo.environment["PATH"] ?? "")
+            .split(separator: ":").map(String.init)
+        let extras = [
+            "\(home)/.local/bin",
+            "\(home)/.codex/bin",
+            "\(home)/bin",
+            "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin", "/bin",
+        ]
+        var seen = Set<String>()
+        for dir in (pathDirs + extras) where seen.insert(dir).inserted {
+            let candidate = "\(dir)/codex"
+            if fm.isExecutableFile(atPath: candidate) {
+                return URL(fileURLWithPath: candidate)
+            }
+        }
+        return nil
     }
 
     /// 子プロセス (`codex app-server`) に渡す環境変数を最小限の whitelist で構築する。

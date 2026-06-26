@@ -291,17 +291,35 @@ final class UsageViewModel {
         }
     }
 
+    /// ターミナルを開いて `command` を実行する。
+    ///
+    /// 以前は `osascript` で Terminal を Apple Events 制御していたが、本アプリは
+    /// Hardened Runtime 有効で署名される一方 `com.apple.security.automation.apple-events`
+    /// エンタイトルメント / `NSAppleEventsUsageDescription` を持たないため、Apple Events が
+    /// `errAEEventNotPermitted (-1743)` で拒否され、TCC 許可プロンプトも出ずにボタンが
+    /// 無反応になっていた（`process.run()` 自体は成功するため失敗が表面化しなかった）。
+    ///
+    /// LaunchServices 経由で `.command` スクリプトを開く方式なら automation 権限が不要で、
+    /// ユーザーの既定ターミナル（通常は Terminal.app）がログインシェルで起動するため
+    /// `~/.local/bin` 等を含む PATH 下で `codex` / `claude` を解決できる。
     private func spawnTerminalCommand(_ command: String, logContext: String) {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("tokencat-\(logContext)-\(UUID().uuidString).command")
         let script = """
-        tell application "Terminal"
-            activate
-            do script "\(command)"
-        end tell
+        #!/bin/bash
+        # TokenCat \(logContext)
+        \(command)
         """
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-        process.arguments = ["-e", script]
-        do { try process.run() } catch {
+        do {
+            try script.write(to: url, atomically: true, encoding: .utf8)
+            try FileManager.default.setAttributes(
+                [.posixPermissions: 0o755],
+                ofItemAtPath: url.path
+            )
+            if !NSWorkspace.shared.open(url) {
+                Logger.ui.error("\(logContext) terminal open failed for \(url.lastPathComponent)")
+            }
+        } catch {
             Logger.ui.error("\(logContext) spawn failed: \(error.localizedDescription)")
         }
     }
